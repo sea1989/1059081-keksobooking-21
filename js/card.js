@@ -108,7 +108,6 @@ if(data.offer.features.length === 0){
 if(data.offer.photos.length === 0){
   cardElement.querySelector('.popup__photos').remove();
 }else{
-    
     cardElement
       .querySelector('.popup__photos')
       .appendChild(getPhotos(data.offer.photos));
@@ -120,6 +119,7 @@ if(data.offer.photos.length === 0){
     cardCloseButton.addEventListener('click', function () {
       cardElement.remove();
     });
+
     cardCloseButton.addEventListener('keydown', function (evt) {
       if (evt.key === ENTER_KEY) {
         cardElement.remove();
