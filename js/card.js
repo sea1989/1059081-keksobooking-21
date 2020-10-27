@@ -97,22 +97,22 @@
     cardElement.querySelector('.popup__description').textContent =
       data.offer.description;
 
-if(data.offer.features.length === 0){
-  cardElement.querySelector('.popup__features').remove();
-}else{
-  cardElement
+    if (data.offer.features.length === 0) {
+      cardElement.querySelector('.popup__features').remove();
+    } else {
+      cardElement
       .querySelector('.popup__features')
       .appendChild(generateFeatures(data.offer.features));
-};
+    }
 
-if(data.offer.photos.length === 0){
-  cardElement.querySelector('.popup__photos').remove();
-}else{
-    cardElement
+    if (data.offer.photos.length === 0) {
+      cardElement.querySelector('.popup__photos').remove();
+    } else {
+      cardElement
       .querySelector('.popup__photos')
       .appendChild(getPhotos(data.offer.photos));
 
-};
+    }
 
     cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 

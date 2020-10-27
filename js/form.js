@@ -22,25 +22,25 @@
   var roomAndGuestValidation = function () {
     var roomsValue = parseInt(roomNumber.value, 10);
     if (roomsValue === 1) {
-      capacity.value = "1";
+      capacity.value = '1';
       capacity.options[2].disabled = false;
       capacity.options[0].disabled = true;
       capacity.options[1].disabled = true;
       capacity.options[3].disabled = true;
     } else if (roomsValue === 2) {
-      capacity.value = "2";
+      capacity.value = '2';
       capacity.options[0].disabled = true;
       capacity.options[3].disabled = true;
       capacity.options[1].disabled = false;
       capacity.options[2].disabled = false;
     } else if (roomsValue === 3) {
-      capacity.value = "3";
+      capacity.value = '3';
       capacity.options[3].disabled = true;
       capacity.options[0].disabled = false;
       capacity.options[1].disabled = false;
       capacity.options[2].disabled = false;
     } else if (roomsValue === 100) {
-      capacity.value = "0";
+      capacity.value = '0';
       capacity.options[0].disabled = true;
       capacity.options[1].disabled = true;
       capacity.options[2].disabled = true;

@@ -36,11 +36,11 @@
 
       form.classList.remove('ad-form--disabled');
 
-    mainMark.removeEventListener('mousedown', onMainMouseDown);
-    mainMark.removeEventListener('keydown', onMainKeyDown);
+      mainMark.removeEventListener('mousedown', onMainMouseDown);
+      mainMark.removeEventListener('keydown', onMainKeyDown);
 
     }
-  }
+  };
 
   mainMark.addEventListener('mousedown', onMainMouseDown);
 
@@ -58,7 +58,7 @@
       mainMark.removeEventListener('mousedown', onMainMouseDown);
       mainMark.removeEventListener('keydown', onMainKeyDown);
     }
-  }
+  };
 
   mainMark.addEventListener('keydown', onMainKeyDown);
 
