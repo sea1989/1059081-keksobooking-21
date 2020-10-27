@@ -42,8 +42,6 @@
     }
   };
 
-  mainMark.addEventListener('mousedown', onMainMouseDown);
-
 
   // активирует при нажатии на enter
 
@@ -60,6 +58,11 @@
     }
   };
 
-  mainMark.addEventListener('keydown', onMainKeyDown);
+  window.addMainMarkListners = () => {
+    mainMark.addEventListener('keydown', onMainKeyDown);
+    mainMark.addEventListener('mousedown', onMainMouseDown);
+  }
+
+  window.addMainMarkListners();
 
 })();

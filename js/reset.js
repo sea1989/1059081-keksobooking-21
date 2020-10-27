@@ -29,6 +29,7 @@
     window.loadResult = null;
     window.removePinsBlock();
     window.doStartFilter();
+    window.addMainMarkListners();
   };
 
   // ДЕактивирует при нажатии на мышку
