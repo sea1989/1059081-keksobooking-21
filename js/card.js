@@ -28,11 +28,11 @@
   };
 
   // клонирует изображения
-  var getPhotos = function (array) {
+  var getPhotos = function (features) {
     var photosFragment = document.createDocumentFragment();
 
-    for (var i = 0; i < array.length; i++) {
-      photosFragment.appendChild(renderPhoto(array[i]));
+    for (var i = 0; i < features.length; i++) {
+      photosFragment.appendChild(renderPhoto(features[i]));
     }
     return photosFragment;
   };
@@ -53,14 +53,14 @@
   window.removePopups = removePopups;
 
   // клонирует преимущества
-  var generateFeatures = function (array) {
+  var generateFeatures = function (photos) {
     var featuresFragment = document.createDocumentFragment();
 
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i < photos.length; i++) {
 
       var featuresItem = document.createElement('li');
       featuresItem.classList.add('popup__feature');
-      var featureSpecialClass = 'popup__feature--' + array[i];
+      var featureSpecialClass = 'popup__feature--' + photos[i];
       featuresItem.classList.add(featureSpecialClass);
       featuresFragment.appendChild(featuresItem);
     }
@@ -118,18 +118,24 @@ if(data.offer.photos.length === 0){
 
     cardCloseButton.addEventListener('click', function () {
       cardElement.remove();
+      document.removeEventListener('keydown', onEscKeydown);
     });
 
     cardCloseButton.addEventListener('keydown', function (evt) {
       if (evt.key === ENTER_KEY) {
         cardElement.remove();
+        document.removeEventListener('keydown', onEscKeydown);
       }
     });
-    document.addEventListener('keydown', function (evt) {
+
+    var onEscKeydown = function (evt) {
       if (evt.key === ESC_KEY) {
         cardElement.remove();
+        document.removeEventListener('keydown', onEscKeydown);
       }
-    });
+    };
+
+    document.addEventListener('keydown', onEscKeydown);
 
     similarCardElement.insertBefore(
         cardElement,

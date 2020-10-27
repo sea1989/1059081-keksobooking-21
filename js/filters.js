@@ -4,10 +4,11 @@
 
   var filters = document.querySelector('.map__filters');
   var featuresList = filters.querySelector('#housing-features');
+  var filtersAll = document.querySelectorAll('.map__filters');
 
   // история фильтров
 
-  var filterArray = [{
+  var filtersHistory = [{
     nameFilter: 'housing-type',
     valueFilter: 'any'
   },
@@ -26,15 +27,13 @@
   ];
 
   var changeArray = function (selectID, newSelectValue) {
-    var element = filterArray.find(function (item) {
+    var indexElement = filtersHistory.findIndex(function (item) {
       return item.nameFilter === selectID;
     });
 
-    var indexElement = filterArray.indexOf(element);
+    filtersHistory.splice(indexElement, 1);
 
-    filterArray.splice(indexElement, 1);
-
-    filterArray.push({
+    filtersHistory.push({
       nameFilter: selectID,
       valueFilter: newSelectValue
     });
@@ -48,50 +47,64 @@
     if ((price >= 10000) && (price <= 50000))
     return 'middle';
 
-   else if (price <10000) 
+   else if (price <10000)
     return 'low';
 
-    else if (price > 50000) 
+    else if (price > 50000)
     return 'high';
 
-    
   }
+
+  const doStartFilter = () => {
+console.log(filtersHistory)
+    filtersHistory.forEach((element)=>{
+      element.valueFilter = 'any';
+    })
+
+    filtersAll.forEach((element)=>{
+      element.reset();
+    })
+
+    console.log(filtersHistory);
+  };
+
+
 
   var filterData = function () {
 
-    var dataArray = window.loadResult;
+    var data = window.loadResult;
 
-    filterArray.forEach(function (object) {
+    filtersHistory.forEach(function (object) {
       if (object.nameFilter === 'housing-type' && object.valueFilter !== 'any') {
-        dataArray = dataArray.filter(function (item) {
+        data = data.filter(function (item) {
           return item.offer.type === object.valueFilter;
         });
       } else if (object.nameFilter === 'housing-price' && object.valueFilter !== 'any') {
-        dataArray = dataArray.filter(function (item) {
+        data = data.filter(function (item) {
           return getGroupByPrice(Number(item.offer.price)) === object.valueFilter;
 
 
         });
       } else if (object.nameFilter === 'housing-rooms' && object.valueFilter !== 'any') {
-        dataArray = dataArray.filter(function (item) {
+        data = data.filter(function (item) {
           return item.offer.rooms === Number(object.valueFilter);
         });
       } else if (object.nameFilter === 'housing-guests' && object.valueFilter !== 'any') {
-        dataArray = dataArray.filter(function (item) {
+        data = data.filter(function (item) {
           return item.offer.guests === Number(object.valueFilter);
         });
       }
     });
     var features = Array.from(featuresList.querySelectorAll('input:checked'));
 
-    function filterByFeatures(data) {
+    function filterByFeatures(dataToFilter) {
       return features.every(function (feature) {
-        return data.offer.features.includes(feature.value);
+        return dataToFilter.offer.features.includes(feature.value);
       });
     }
-    dataArray = dataArray.filter(filterByFeatures);
+    data = data.filter(filterByFeatures);
 
-    return dataArray;
+    return data;
   };
 
   filters.addEventListener('change', window.debounce(function (evt) {
@@ -99,8 +112,10 @@
     window.removePinsBlock();
     window.removePopupCard();
     changeArray(evt.target.id, evt.target.value);
-    console.log(filterArray);
+    console.log(filtersHistory);
     window.createPinsBlock(filterData(evt.target.id, evt.target.value));
   }));
+
+window.doStartFilter = doStartFilter;
 
 })();

@@ -16,43 +16,37 @@
     }
   };
 
-  // функция активации страницы
+  // функция ДЕактивации страницы
 
   var getPageDeactive = function () {
     document.querySelector('.map').classList.add('map--faded');
     switchFieldset(formFieldsets, true);
     addressInput.value = '600, ' + '375';
-    
+
     mainMark.style.top = 375 + 'px';
     mainMark.style.left = 570 + 'px';
     window.removePopups();
+    window.loadResult = null;
+    window.removePinsBlock();
+    window.doStartFilter();
   };
 
-  // активирует при нажатии на мышку
+  // ДЕактивирует при нажатии на мышку
 
   buttonReset.addEventListener('mousedown', function (evt) {
     if (!evt.button) {
       getPageDeactive();
 
-    
-
-      if (!window.loadResult) {
-        window.load(window.createPinsBlock);
-      }
-
       form.classList.add('ad-form--disabled');
     }
   });
 
-  // активирует при нажатии на enter
+  // ДЕактивирует при нажатии на enter
 
   buttonReset.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       getPageDeactive();
 
-      if (!window.loadResult) {
-        window.load(window.createPinsBlock);
-      }
       form.classList.add('ad-form--disabled');
     }
   });

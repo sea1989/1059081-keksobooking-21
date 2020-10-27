@@ -27,7 +27,7 @@
 
   // функция прописывает в инпут адрес главной метки
 
-  var pinCoordinates = function () {
+  var printCoordinates = function () {
     var pinCoordinatesLeft = Math.round(
         parseInt(mainMark.style.left, 10) + PIN_WIDTH / 2
     );
@@ -40,7 +40,7 @@
   mainMark.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    pinCoordinates();
+    printCoordinates();
 
     var startCoords = {
       x: evt.clientX,
@@ -49,7 +49,7 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      pinCoordinates();
+      printCoordinates();
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -82,7 +82,7 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      pinCoordinates();
+      printCoordinates();
 
       mainMark.removeEventListener('mousemove', onMouseMove);
       mainMark.removeEventListener('mouseup', onMouseUp);

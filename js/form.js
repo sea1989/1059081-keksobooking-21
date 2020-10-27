@@ -22,21 +22,25 @@
   var roomAndGuestValidation = function () {
     var roomsValue = parseInt(roomNumber.value, 10);
     if (roomsValue === 1) {
+      capacity.value = "1";
       capacity.options[2].disabled = false;
       capacity.options[0].disabled = true;
       capacity.options[1].disabled = true;
       capacity.options[3].disabled = true;
     } else if (roomsValue === 2) {
+      capacity.value = "2";
       capacity.options[0].disabled = true;
       capacity.options[3].disabled = true;
       capacity.options[1].disabled = false;
       capacity.options[2].disabled = false;
     } else if (roomsValue === 3) {
+      capacity.value = "3";
       capacity.options[3].disabled = true;
       capacity.options[0].disabled = false;
       capacity.options[1].disabled = false;
       capacity.options[2].disabled = false;
     } else if (roomsValue === 100) {
+      capacity.value = "0";
       capacity.options[0].disabled = true;
       capacity.options[1].disabled = true;
       capacity.options[2].disabled = true;
@@ -116,7 +120,7 @@
 
   // Обнуление формы
 
-  var onFormReset = function () {
+  var resetForm = function () {
     adForm.reset();
     toggleForm();
     document.querySelector('.map').classList.add('map--faded');
@@ -135,14 +139,14 @@
     window.success.show();
   };
 
-  var onErrorUpload = function (error) {
+  window.showError = function (error) {
     window.error.show(error);
   };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.upload(new FormData(form), onSuccessUpload, onErrorUpload);
-    onFormReset();
+    window.upload(new FormData(form), onSuccessUpload, window.showError);
+    resetForm();
   });
 
   window.removePinsBlock = removePinsBlock;

@@ -21,33 +21,45 @@
   var getPageActive = function () {
     document.querySelector('.map').classList.remove('map--faded');
     switchFieldset(formFieldsets, false);
+
   };
 
   // активирует при нажатии на мышку
 
-  mainMark.addEventListener('mousedown', function (evt) {
+  var onMainMouseDown = function (evt) {
     if (!evt.button) {
       getPageActive();
 
       if (!window.loadResult) {
-        window.load(window.createPinsBlock);
+        window.load(window.createPinsBlock, window.showError);
       }
 
       form.classList.remove('ad-form--disabled');
+
+    mainMark.removeEventListener('mousedown', onMainMouseDown);
+    mainMark.removeEventListener('keydown', onMainKeyDown);
+
     }
-  });
+  }
+
+  mainMark.addEventListener('mousedown', onMainMouseDown);
+
 
   // активирует при нажатии на enter
 
-  mainMark.addEventListener('keydown', function (evt) {
+  var onMainKeyDown = function (evt) {
     if (evt.key === 'Enter') {
       getPageActive();
 
       if (!window.loadResult) {
-        window.load(window.createPinsBlock);
+        window.load(window.createPinsBlock, window.showError);
       }
       form.classList.remove('ad-form--disabled');
+      mainMark.removeEventListener('mousedown', onMainMouseDown);
+      mainMark.removeEventListener('keydown', onMainKeyDown);
     }
-  });
+  }
+
+  mainMark.addEventListener('keydown', onMainKeyDown);
 
 })();

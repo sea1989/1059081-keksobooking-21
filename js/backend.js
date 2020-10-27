@@ -2,6 +2,8 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
+  var UPURL = 'https://javascript.pages.academy/keksobooking';
+
   var StatusCode = {
     OK: 200
   };
@@ -34,8 +36,6 @@
     xhr.send();
 
   };
-
-  var UPURL = 'https://javascript.pages.academy/keksobooking';
 
   var errorMap = {
     '400': 'Ошибка 400: Плохой запрос',
