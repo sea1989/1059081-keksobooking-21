@@ -92,7 +92,6 @@
   }
 
   // удаление пинов
-
   var removePinsBlock = function () {
     var pinsBlock = document.querySelectorAll(".map__pin:not(.map__pin--main)");
     pinsBlock.forEach(function (item) {
