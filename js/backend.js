@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 (function () {
-  var URL = "https://javascript.pages.academy/keksobooking/data";
-  var UPURL = "https://javascript.pages.academy/keksobooking";
+  var URL = 'https://javascript.pages.academy/keksobooking/data';
+  var UPURL = 'https://javascript.pages.academy/keksobooking';
 
   var StatusCode = {
     OK: 200,
@@ -11,43 +11,43 @@
 
   window.load = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.responseType = "json";
+    xhr.responseType = 'json';
 
-    xhr.addEventListener("load", function () {
+    xhr.addEventListener('load', function () {
       window.loadResult = xhr.response;
       if (xhr.status === StatusCode.OK) {
         onSuccess(window.loadResult);
       } else {
-        onError("Статус ответа: " + xhr.status + " " + xhr.statusText);
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
-    xhr.addEventListener("error", function () {
-      onError("Произошла ошибка соединения");
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
     });
-    xhr.addEventListener("timeout", function () {
-      onError("Запрос не успел выполниться за " + xhr.timeout + "мс");
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open("GET", URL);
+    xhr.open('GET', URL);
     xhr.send();
   };
 
   var errorMap = {
-    400: "Ошибка 400: Плохой запрос",
-    403: "Ошибка 403: Запрещено",
-    404: "Ошибка 404: Не найден",
-    500: "Ошибка 500: Внутренняя ошибка сервера",
-    502: "Ошибка 502: Плохой шлюз",
-    503: "Ошибка 503: Сервис недоступен",
+    400: 'Ошибка 400: Плохой запрос',
+    403: 'Ошибка 403: Запрещено',
+    404: 'Ошибка 404: Не найден',
+    500: 'Ошибка 500: Внутренняя ошибка сервера',
+    502: 'Ошибка 502: Плохой шлюз',
+    503: 'Ошибка 503: Сервис недоступен',
   };
 
   window.upload = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.responseType = "json";
+    xhr.responseType = 'json';
 
-    xhr.addEventListener("load", function () {
+    xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
@@ -71,12 +71,12 @@
             onError(errorMap[xhr.status]);
             break;
           default:
-            onError("Cтатус ответа: : " + xhr.status + " " + xhr.statusText);
+            onError('Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText);
         }
       }
     });
 
-    xhr.open("POST", UPURL);
+    xhr.open('POST', UPURL);
     xhr.send(data);
   };
 })();

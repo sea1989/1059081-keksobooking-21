@@ -1,52 +1,52 @@
-"use strict";
+'use strict';
 
 (function () {
-  var ESC_KEY = "Escape";
-  var ENTER_KEY = "Enter";
+  var ESC_KEY = 'Escape';
+  var ENTER_KEY = 'Enter';
 
-  var main = document.querySelector("main");
+  var main = document.querySelector('main');
   var errorTemplate = document
-    .querySelector("#error")
-    .content.querySelector(".error");
+    .querySelector('#error')
+    .content.querySelector('.error');
 
   var createErrorPopup = function (errorText) {
     var errorPopup = errorTemplate.cloneNode(true);
-    var errorMessage = errorPopup.querySelector(".error__message");
-    var errorButton = errorPopup.querySelector(".error__button");
+    var errorMessage = errorPopup.querySelector('.error__message');
+    var errorButton = errorPopup.querySelector('.error__button');
 
     errorMessage.textContent = errorText;
 
-    errorButton.addEventListener("click", function () {
+    errorButton.addEventListener('click', function () {
       errorPopup.remove();
-      document.removeEventListener("keydown", onEscKeydown);
+      document.removeEventListener('keydown', onEscKeydown);
     });
-    errorPopup.addEventListener("click", function (evt) {
+    errorPopup.addEventListener('click', function (evt) {
       if (evt.target !== errorMessage) {
         errorPopup.remove();
-        document.removeEventListener("keydown", onEscKeydown);
+        document.removeEventListener('keydown', onEscKeydown);
       }
     });
-    errorButton.addEventListener("keydown", function (evt) {
+    errorButton.addEventListener('keydown', function (evt) {
       if (evt.key === ENTER_KEY) {
         errorPopup.remove();
-        document.removeEventListener("keydown", onEscKeydown);
+        document.removeEventListener('keydown', onEscKeydown);
       }
     });
 
     var onEscKeydown = function (evt) {
       if (evt.key === ESC_KEY) {
         errorPopup.remove();
-        document.removeEventListener("keydown", onEscKeydown);
+        document.removeEventListener('keydown', onEscKeydown);
       }
     };
 
-    document.addEventListener("keydown", onEscKeydown);
+    document.addEventListener('keydown', onEscKeydown);
 
     return errorPopup;
   };
 
   var showErrorPopup = function (errorText) {
-    var mainPopup = main.querySelector(".error");
+    var mainPopup = main.querySelector('.error');
     if (!mainPopup) {
       main.appendChild(createErrorPopup(errorText));
     }
