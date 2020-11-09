@@ -22,9 +22,9 @@
     window.loadResult = null;
     window.removePinsBlock();
     window.doStartFilter();
-    window.resetMainMark();
     window.addMainMarkListners();
     form.reset();
+    window.resetMainMark();
   };
 
   // ДЕактивирует при нажатии на мышку
