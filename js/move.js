@@ -1,97 +1,95 @@
-'use strict';
+"use strict";
 
 (function activate() {
-
-  var PIN_TIP_HEIGHT = 22;
   var DRAG_LIMIT = {
     x: {
       min: 0,
-      max: 1200
+      max: 1200,
     },
     y: {
-      min: 130,
-      max: 630
-    }
+      min: 100,
+      max: 630,
+    },
+  };
+  var MAIN_MARK_DEFAIULT_POS = {
+    x: 570,
+    y: 375,
   };
 
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
-
-  var mainMark = document.querySelector('.map__pin--main');
-  var form = document.querySelector('.ad-form');
-  var addressInput = form.querySelector('#address');
-
-  // задаем адрес изначально
-
-  addressInput.value = '600, ' + '375';
+  var PIN_WIDTH = 65;
+  var PIN_HEIGHT = 65;
+  var PIN_ARROW_HEIGHT = 22;
+  var widthMap = document.querySelector(".map__pins").offsetWidth;
+  var mainMark = document.querySelector(".map__pin--main");
+  var form = document.querySelector(".ad-form");
+  var addressInput = form.querySelector("#address");
 
   // функция прописывает в инпут адрес главной метки
 
   var printCoordinates = function () {
-    var pinCoordinatesLeft = Math.round(
-        parseInt(mainMark.style.left, 10) + PIN_WIDTH / 2
-    );
+    var pinCoordinatesLeft = Math.round(PIN_WIDTH / 2 + mainMark.offsetLeft);
     var pinCoordinatesTop = Math.round(
-        parseInt(mainMark.style.top, 10) + PIN_HEIGHT / 2
+      PIN_HEIGHT + PIN_ARROW_HEIGHT + mainMark.offsetTop
     );
-    addressInput.value = pinCoordinatesLeft + ', ' + pinCoordinatesTop;
+    addressInput.value = pinCoordinatesLeft + ", " + pinCoordinatesTop;
   };
 
-  mainMark.addEventListener('mousedown', function (evt) {
+  // задаем адрес изначально
+
+  printCoordinates();
+
+  mainMark.addEventListener("mousedown", function (evt) {
     evt.preventDefault();
-
-    printCoordinates();
-
     var startCoords = {
       x: evt.clientX,
-      y: evt.clientY
+      y: evt.clientY,
     };
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       printCoordinates();
-
       var shift = {
         x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+        y: startCoords.y - moveEvt.clientY,
       };
 
       startCoords = {
         x: moveEvt.clientX,
-        y: moveEvt.clientY
+        y: moveEvt.clientY,
       };
 
-      mainMark.style.top = (mainMark.offsetTop - shift.y) + 'px';
-      mainMark.style.left = (mainMark.offsetLeft - shift.x) + 'px';
-
-      // X limit
-      if (mainMark.offsetLeft > DRAG_LIMIT.x.max - mainMark.offsetWidth / 2) {
-        mainMark.style.left = DRAG_LIMIT.x.max - mainMark.offsetWidth / 2 + 'px';
-      } else if (mainMark.offsetLeft < DRAG_LIMIT.x.min - mainMark.offsetWidth / 2) {
-        mainMark.style.left = DRAG_LIMIT.x.min - mainMark.offsetWidth / 2 + 'px';
+      if (mainMark.offsetLeft - shift.x < 0) {
+        mainMark.style.left = 0 + "px";
+      } else if (mainMark.offsetLeft - shift.x > widthMap - PIN_WIDTH) {
+        mainMark.style.left = widthMap - PIN_WIDTH + "px";
+      } else {
+        mainMark.style.left = mainMark.offsetLeft - shift.x + "px";
       }
 
-      // Y limit
-      if (mainMark.offsetTop > DRAG_LIMIT.y.max - mainMark.offsetHeight - PIN_TIP_HEIGHT) {
-        mainMark.style.top = DRAG_LIMIT.y.max - mainMark.offsetHeight - PIN_TIP_HEIGHT + 'px';
-      } else if (mainMark.offsetTop < DRAG_LIMIT.y.min - mainMark.offsetHeight - PIN_TIP_HEIGHT) {
-        mainMark.style.top = DRAG_LIMIT.y.min - mainMark.offsetHeight - PIN_TIP_HEIGHT + 'px';
+      if (mainMark.offsetTop - shift.y > DRAG_LIMIT.y.max) {
+        mainMark.style.top = DRAG_LIMIT.y.max + "px";
+      } else if (mainMark.offsetTop - shift.y < DRAG_LIMIT.y.min) {
+        mainMark.style.top = DRAG_LIMIT.y.min + "px";
+      } else {
+        mainMark.style.top = mainMark.offsetTop - shift.y + "px";
       }
-
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       printCoordinates();
-
-      mainMark.removeEventListener('mousemove', onMouseMove);
-      mainMark.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
     };
 
-
-    mainMark.addEventListener('mousemove', onMouseMove);
-    mainMark.addEventListener('mouseup', onMouseUp);
-
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
   });
 
+  window.resetMainMark = () => {
+    mainMark.style.top = MAIN_MARK_DEFAIULT_POS.y + "px";
+    mainMark.style.left = MAIN_MARK_DEFAIULT_POS.x + "px";
+    printCoordinates();
+  };
+  window.printCoordinates = printCoordinates;
 })();

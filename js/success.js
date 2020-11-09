@@ -1,28 +1,31 @@
-'use strict';
+"use strict";
 
 (function () {
-  var main = document.querySelector('main');
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var ESC_KEY = "Escape";
+  var main = document.querySelector("main");
+  var successTemplate = document
+    .querySelector("#success")
+    .content.querySelector(".success");
 
   var createSuccessPopup = function () {
     var successPopup = successTemplate.cloneNode(true);
-    var successMessage = successPopup.querySelector('.success__message');
+    var successMessage = successPopup.querySelector(".success__message");
 
-    successPopup.addEventListener('click', function (evt) {
+    successPopup.addEventListener("click", function (evt) {
       if (evt.target !== successMessage) {
         successPopup.remove();
-        document.removeEventListener('keydown', onEscKeydown);
+        document.removeEventListener("keydown", onEscKeydown);
       }
     });
 
     var onEscKeydown = function (evt) {
-      if (evt.key === window.utils.Key.ESC) {
+      if (evt.key === ESC_KEY) {
         successPopup.remove();
-        document.removeEventListener('keydown', onEscKeydown);
+        document.removeEventListener("keydown", onEscKeydown);
       }
     };
 
-    document.addEventListener('keydown', onEscKeydown);
+    document.addEventListener("keydown", onEscKeydown);
 
     return successPopup;
   };
@@ -32,6 +35,6 @@
   };
 
   window.success = {
-    show: showSuccessPopup
+    show: showSuccessPopup,
   };
 })();
